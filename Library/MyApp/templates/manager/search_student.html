@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>DLUT图书管理系统</title>
+    <link rel="stylesheet" href="../../static/css/public.css"/>
+    <link rel="stylesheet" href="../../static/css/style.css"/>
+</head>
+<body>
+<!--头部-->
+    <header class="publicHeader">
+        <h1>DLUT图书管理系统</h1>
+        <div class="publicHeaderR">
+            <p><span>下午好！</span><span style="color: #1b91ff"> {{ name }}</span>管理员 , 欢迎你！</p>
+            <a href="/login?">退出</a>
+        </div>
+    </header>
+    <section class="publicTime">
+        <span id="time"></span>
+        <a href="#">温馨提示：为了能正常浏览，请使用google浏览器！）</a>
+    </section>
+    <section class="publicMian ">
+        <div class="left">
+            <h2 class="leftH2"><span class="span1"></span>功能列表 <span></span></h2>
+            <nav>
+                <ul class="list">
+                    <li><a href="/student_information?">个人信息</a></li>
+                    <li><a href="/search_book?">查找书籍</a></li>
+                    <li><a href="/borrow_record?">借书记录</a></li>
+                    <li><a href="/change_password?">密码修改</a></li>
+                    <li><a href="/login?">退出系统</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="right">
+            <div class="location">
+                <strong>你现在所在的位置是:</strong>
+                <span>借书记录页面</span>
+            </div>
+            <div style="overflow: scroll;height: 604px;">
+            <table class="providerTable" cellpadding="0" cellspacing="0"style="position: relative;top: 8px;width: 1113px;left: 100px;">
+            <tr class="firstTr">
+                <th>国际标准书号</th>
+                <th>书名</th>
+                <th>借书时间</th>
+                <th>剩余时间</th>
+                <th>操作</th>
+            </tr>
+                {% for record in records %}
+                    <tr>
+                    <td>{{ record.book_id }}</td>
+                    <td>{{ record.book_name }}</td>
+                    <td>{{ record.borrow_time }}</td>
+                    <td>{{ record.rest_time }}</td>
+                <td>
+                    <a href="/return_book?borrow_id={{ record.id }}"onclick="alert('还书成功！')"><img src="../../static/img/schu.png" alt="还书" title="还书"/></a>
+                </td>
+                </tr>
+                {% endfor %}
+        </table>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    </footer>
+
+<script src="../../static/js/jquery.js"></script>
+<script src="../../static/js/js.js"></script>
+<script src="../../static/js/time.js"></script>
+
+</body>
+</html>

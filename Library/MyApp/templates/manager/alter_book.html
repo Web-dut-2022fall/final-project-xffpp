@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>DLUT图书管理系统</title>
+    <link rel="stylesheet" href="../../static/css/public.css"/>
+    <link rel="stylesheet" href="../../static/css/style.css"/>
+</head>
+<body>
+<!--头部-->
+    <header class="publicHeader">
+        <h1>DLUT图书管理系统</h1>
+        <div class="publicHeaderR">
+            <p><span>下午好！</span><span style="color: #1b91ff"> {{ name }}</span>管理员 , 欢迎你！</p>
+            <a href="/login?">退出</a>
+        </div>
+    </header>
+<!--时间-->
+
+    <section class="publicTime">
+        <span id="time"></span>
+        <a href="#">温馨提示：为了能正常浏览，请使用google浏览器！</a>
+    </section>
+<!--主体内容-->
+    <section class="publicMian ">
+        <div class="left">
+            <h2 class="leftH2"><span class="span1"></span>功能列表 <span></span></h2>
+            <nav>
+                <ul class="list">
+                    <li ><a href="/manager_information?">个人信息</a></li>
+                    <li><a href="/manage_book?">书籍管理</a></li>
+                    <li><a href="/add_new_book?">采购书籍</a></li>
+                    <li><a href="/change_manager_password?">密码修改</a></li>
+                    <li><a href="/login?">退出系统</a></li>
+                </ul>
+            </nav>
+        </div>
+    <script>
+        function fun() {
+            var ISBN = document.getElementById("ISBN").value
+            var book_name = document.getElementById("book_name").value
+            var type_name = document.getElementById("type_name").value
+            var book_author = document.getElementById("book_author").value
+            var book_publisher = document.getElementById("book_publisher").value
+            var book_version = document.getElementById("book_version").value
+            var book_price = document.getElementById("book_price").value
+            var book_place=document.getElementById("book_place").value
+            var book_number=document.getElementById("book_number").value
+            var book_rest=document.getElementById("book_rest").value
+            var a = /^\d+$/.test(book_number);
+            var b = /^\d+$/.test(book_rest);
+            if(ISBN==''||book_name==''||type_name==''||book_author==''||book_publisher==''||book_version==''||book_price==''||book_number==''||book_rest==''|| book_place=='')
+                ;
+            else
+                if(a && b)
+                    alert("修改成功！")
+                else
+                    alert("馆藏数和可借数中输入的不是数字，请重新修改书籍信息！")
+        }
+    </script>
+        <div class="right">
+            <div class="location">
+                <strong>你现在所在的位置是:</strong>
+                <span>修改书籍页面</span>
+            </div>
+            <div class="providerAdd">
+                <form action="/alter_book/"method="post">
+                    {% csrf_token %}
+                    <div>
+                        <label >国际标准书号：</label>
+                        <input type="text" name="ISBN"value="{{ ISBN }}"id="ISBN" required readonly/>
+                        <label >书本类型：</label>
+                        <select name="type_name"id="type_name">
+                            <option value="{{ type_name }}">{{ type_name }}</option>
+                         {% for type in types %}
+                            <option value="{{type.type_name}}">{{ type.type_name}}</option>
+                         {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <label >书名：</label>
+                        <input type="text"name="book_name"value="{{ book_name }}" id="book_name" required/>
+                        <label >价格：</label>
+                        <input type="text" name="book_price"value="{{ book_price }}"id="book_price" required/>
+                    </div>
+                    <div>
+                        <label >作者：</label>
+                        <input type="text" name="book_author"value="{{ book_author }}"id="book_author" required/>
+                        <label >馆藏数：</label>
+                        <input type="text" name="book_number"id="book_number" value="{{ book_number }}"required/>
+                    </div>
+                    <div>
+                        <label >出版社：</label>
+                        <input type="text" name="book_publisher"value="{{ book_publisher }}"id="book_publisher" required />
+                        <label >可借数：</label>
+                        <input type="text"name="book_rest" value="{{ book_rest }}"id="book_rest" required/>
+                    </div>
+                    <div>
+                        <label >版本：</label>
+                        <input type="text" name="book_version"value="{{ book_version }}" id="book_version" required />
+                        <label >书库：</label>
+                        <input type="text" name="book_place"value="{{ book_place }}"id="book_place" required/>
+                    </div>
+                    <div class="providerAddBtn">
+                        <input type="submit"value="确&nbsp;认"onclick="fun()" style=" width: 88px;
+    height: 42px;
+    position: absolute;
+    left: 745px;
+    top: 383px;
+    font-size: 20px;">
+                    </div>
+                </form>
+            </div>
+        </div>
+<script src="../../static/js/jquery.js"></script>
+<script src="../../static/js/js.js"></script>
+<script src="../../static/js/time.js"></script>
+    </section>
+</body>
+</html>
+
+

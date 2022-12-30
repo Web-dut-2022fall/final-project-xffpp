@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>DLUT图书管理系统</title>
+    <link rel="stylesheet" href="../../static/css/public.css"/>
+    <link rel="stylesheet" href="../../static/css/style.css"/>
+</head>
+<body>
+<!--头部-->
+    <header class="publicHeader">
+        <h1>DLUT图书管理系统</h1>
+        <div class="publicHeaderR">
+            <p><span>下午好！</span><span style="color: #1b91ff"> {{ name }}</span>管理员 , 欢迎你！</p>
+            <a href="/login?">退出</a>
+        </div>
+    </header>
+<!--时间-->
+
+    <section class="publicTime">
+        <span id="time"></span>
+        <a href="#">温馨提示：为了能正常浏览，请使用google浏览器！</a>
+    </section>
+<!--主体内容-->
+    <section class="publicMian ">
+        <div class="left">
+            <h2 class="leftH2"><span class="span1"></span>功能列表 <span></span></h2>
+            <nav>
+                <ul class="list">
+                    <li ><a href="/manager_information?">个人信息</a></li>
+                    <li><a href="/manage_book?">书籍管理</a></li>
+                    <li><a href="/add_new_book?">采购书籍</a></li>
+                    <li><a href="/change_manager_password?">密码修改</a></li>
+                    <li><a href="/login?">退出系统</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="right">
+            <div class="location">
+                <strong>你现在所在的位置是:</strong>
+                <span>个人信息管理页面</span>
+            </div>
+            <div class="providerAdd">
+                <form action="/manager_information/"method="post">
+                    {% csrf_token %}
+                    <div>
+                        <label >姓名：</label>
+                        <input type="text" value="{{ name }}"  readonly/><img src="../../static/img/timg.jpg"style="position: relative;
+    right: 25px;top: 5px;">
+                    </div>
+                    <div>
+                        <label >工号：</label>
+                        <input type="text" value="{{ id }}"  readonly/><img src="../../static/img/timg.jpg"style="position: relative;
+    right: 25px;top: 5px;">
+                    </div>
+                    <div>
+                        <label >电话：</label>
+                        <input type="text" value="{{ telephone }}" name="telephone"readonly /><img src="../../static/img/timg.jpg"style="position: relative;
+    right: 25px;top: 5px;">
+                    </div>
+                    <div>
+                        <label >书库：</label>
+                        <select name="stack" required>
+                            <option value="{{ stack }}">{{ stack }}</option>
+                            <option value="A区">A区</option>
+                            <option value="B区">B区</option>
+                            <option value="C区">C区</option>
+                            <option value="D区">D区</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label >邮箱：</label>
+                        <input type="text" value="{{ email }}"name="email" />
+                    </div>
+                    <div class="providerAddBtn">
+                        <input type="submit"value="保存"onclick="alert('保存成功！')">
+                    </div>
+                </form>
+            </div>
+        </div>
+<script src="../../static/js/jquery.js"></script>
+<script src="../../static/js/js.js"></script>
+<script src="../../static/js/time.js"></script>
+</body>
+</html>
+
+

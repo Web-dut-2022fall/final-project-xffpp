@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>DLUT图书管理系统</title>
+    <link rel="stylesheet" href="../../static/css/public.css"/>
+    <link rel="stylesheet" href="../../static/css/style.css"/>
+</head>
+<body>
+{% if status == 0 %}
+    <script>
+    alert("未找到该本书！！！")
+    </script>
+{% elif status == 1 %}
+    <script>
+    alert("未找到该类型的书！！！")
+    </script>
+{% endif %}
+<!--头部-->
+<header class="publicHeader">
+    <h1>DLUT图书管理系统</h1>
+
+    <div class="publicHeaderR">
+        <p><span>下午好！</span><span style="color: #1b91ff"> {{ name }}</span> , 欢迎你！</p>
+        <a href="/login?">退出</a>
+    </div>
+</header>
+<!--时间-->
+<section class="publicTime">
+    <span id="time">2022年12月28日 11:11  星期三</span>
+    <a href="#">温馨提示：为了能正常浏览，请使用google浏览器！</a>
+</section>
+<!--主体内容-->
+<section class="publicMian ">
+    <div class="left">
+        <h2 class="leftH2"><span class="span1"></span>功能列表 <span></span></h2>
+        <nav>
+            <ul class="list">
+                <li ><a href="/student_information?">个人信息</a></li>
+                <li><a href="/search_book?">查找书籍</a></li>
+                <li><a href="/borrow_record?">借书记录</a></li>
+                <li><a href="/change_password?">密码修改</a></li>
+                <li><a href="/login?">退出系统</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="right">
+        <div class="location">
+            <strong>你现在所在的位置是:</strong>
+            <span>查找书籍页面</span>
+        </div>
+    <form>
+    {% csrf_token %}
+        <div class="search">
+                <span>书籍名称：</span>
+                <input type="text" placeholder="请输入书籍的名称"name="book_name"/>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+                <span>书籍类型：</span>
+                <select name="type_id" >
+                    <option value="0">--请选择--</option>
+                    {% for type in types %}
+                        <option value="{{type.type_id}}">{{type.type_name}}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="查询"formaction="/search_book/"formmethod="post"
+                style="width: 70px;height: 37px;position: absolute;left: 760px;top: 116px;"/><!--点击查询按钮后提交到search_book函数的post部分执行 -->
+            </div>
+    </form>
+    <script>
+        function fun(rest)
+        {
+            if (rest)
+                alert("借阅成功！")
+            else
+                alert("抱歉该书库存不足，无法借阅！")
+        }
+    </script>
+    <div style="overflow: scroll;height: 560px;width: 1255px;">
+        <table class="providerTable" cellpadding="0" cellspacing="0"style="position: relative;top: 8px;width: 1237px;left: 0px;">
+            <tr class="firstTr">
+                <th>国际标准书号</th>
+                <th>书名</th>
+                <th>作者</th>
+                <th>出版社</th>
+                <th>版本</th>
+                <th>价格</th>
+                <th>总库存数</th>
+                <th>可借数</th>
+                <th>书籍类型</th>
+                <th>所属书库</th>
+                <th>操作</th>
+            </tr>
+            {% for book in books %}
+                <tr>
+                    <td>{{ book.ISBN }}</td>
+                    <td>{{ book.book_name }}</td>
+                    <td>{{ book.book_author }}</td>
+                    <td>{{ book.book_publisher }}</td>
+                    <td>{{ book.book_version }}</td>
+                    <td>{{ book.book_price }}</td>
+                    <td>{{ book.book_number }}</td>
+                    <td>{{ book.book_rest }}</td>
+                    <td>{{ book.book_type.type_name }}</td><!--因为书籍类型是book表的外键，所以需要二级引用-->
+                    <td>{{ book.book_place }}</td>
+                <td>
+                    <a href="/borrow_book?book_ISBN={{ book.ISBN }}"onclick="fun({{ book.book_rest }})"><img src="../../static/img/zd.png" alt="借阅" title="借阅"/></a>
+                </td>
+                </tr>
+            {% endfor %}
+        </table>
+</div>
+    </div>
+</section>
+<footer class="footer">
+</footer>
+
+<script src="../../static/js/jquery.js"></script>
+<script src="../../static/js/js.js"></script>
+<script src="../../static/js/time.js"></script>
+
+</body>
+</html>
